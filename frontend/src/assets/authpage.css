@@ -1,0 +1,52 @@
+:root {
+  --bg1: 180 2% 90%;
+}
+
+.auth-page-container {
+  --bg-opacity: 0;
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  background: transparent;
+  /* background-color: aliceblue; */
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.container {
+  --bg-opacity: 1;
+  border-radius: 10px;
+  border-width: 1px;
+  border-style: hidden;
+  height: 100vh;
+  width: auto;
+  /* width: 100%; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  min-height: 480px;
+  min-width: 480px;
+  max-height: 480px;
+  max-width: 480px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 800px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .card {
+    min-height: 480px;
+    min-width: 320px;
+    max-width: 320px;
+    max-height: 480px;
+  }
+}
