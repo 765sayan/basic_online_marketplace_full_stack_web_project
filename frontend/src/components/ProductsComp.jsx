@@ -1,12 +1,13 @@
 import imageIcon from "../assets/imageIcon.svg";
 import "../assets/productscomponents.css";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   buyProduct,
   getAllProductsAsUserService,
   getCollectionOfProductsService,
 } from "../services/userProductsServices";
 import { addToCartService } from "../services/cartServices";
+import { PageNoContext, SetPageNoContext } from "../App";
 
 export default function ProductsComp(props) {
   const [productClickedState, setProductClickedStated] = useState([]);
@@ -39,12 +40,15 @@ export default function ProductsComp(props) {
     });
   }
 
+  const pageNoState = useContext(PageNoContext);
+  const setPageNoState = useContext(SetPageNoContext);
+
   function fetchData(offset) {
     const listOfComp = [];
     let limit = 8;
 
     setPageNo(offset);
-
+    setPageNoState(offset);
     if (offset !== 0) {
       getCollectionOfProductsService(limit, offset * 8).then((res) => {
         if (res && res.products) {
@@ -127,12 +131,18 @@ export default function ProductsComp(props) {
     ) {
       setToken(`Bearer ${JSON.parse(localStorage.getItem("auth")).token}`);
       getAllProductsAsUser();
-
-      fetchData(0);
+      if (pageNoState !== undefined) {
+        fetchData(pageNoState);
+      } else {
+        fetchData(0);
+      }
     } else {
       getAllProductsAsUser();
-
-      fetchData(0);
+      if (pageNoState !== undefined) {
+        fetchData(pageNoState);
+      } else {
+        fetchData(0);
+      }
     }
   }, []);
 

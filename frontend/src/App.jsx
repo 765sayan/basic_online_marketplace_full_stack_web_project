@@ -11,12 +11,17 @@ import SellerProfilePage from "./pages/SellerProfilePage";
 import CartPage from "./pages/CartPage";
 import { useEffect, useState } from "react";
 import { getCartService } from "./services/cartServices";
+import { createContext } from "react";
+
+export const PageNoContext = createContext(undefined);
+export const SetPageNoContext = createContext(undefined);
 
 function App() {
   const [numberOfCartItems, setNumberOfCartItems] = useState(0);
 
   const [showAuthCompState, setShowAuthCompState] = useState(false);
   const [userInfoState, setUserInfoState] = useState({});
+  const [pageNoState, setPageNoState] = useState(0);
 
   async function getCartLength(token) {
     if (token) {
@@ -41,112 +46,117 @@ function App() {
 
   return (
     <>
-      <Routes>
-        <Route path="/">
-          <Route path="auth" element={<AuthPage />} />
-          <Route
-            path=""
-            element={
-              <BuyerHomePage
-                numberOfCartItems={numberOfCartItems}
-                setNumberOfCartItems={setNumberOfCartItems}
-                showAuthCompState={showAuthCompState}
-                setShowAuthCompState={setShowAuthCompState}
-                userInfoState={userInfoState}
-                setUserInfoState={setUserInfoState}
+      <PageNoContext.Provider value={pageNoState}>
+        <SetPageNoContext.Provider value={setPageNoState}>
+          <Routes>
+            <Route path="/">
+              <Route path="auth" element={<AuthPage />} />
+              <Route
+                path=""
+                element={
+                  <BuyerHomePage
+                    numberOfCartItems={numberOfCartItems}
+                    setNumberOfCartItems={setNumberOfCartItems}
+                    showAuthCompState={showAuthCompState}
+                    setShowAuthCompState={setShowAuthCompState}
+                    userInfoState={userInfoState}
+                    setUserInfoState={setUserInfoState}
+                  />
+                }
               />
-            }
-          />
-        </Route>
-        <Route path="/buyer">
-          <Route
-            path=""
-            element={
-              <BuyerHomePage
-                numberOfCartItems={numberOfCartItems}
-                setNumberOfCartItems={setNumberOfCartItems}
-                showAuthCompState={showAuthCompState}
-                setShowAuthCompState={setShowAuthCompState}
-                userInfoState={userInfoState}
-                setUserInfoState={setUserInfoState}
+            </Route>
+            <Route path="/buyer">
+              <Route
+                path=""
+                element={
+                  <BuyerHomePage
+                    numberOfCartItems={numberOfCartItems}
+                    setNumberOfCartItems={setNumberOfCartItems}
+                    showAuthCompState={showAuthCompState}
+                    setShowAuthCompState={setShowAuthCompState}
+                    userInfoState={userInfoState}
+                    setUserInfoState={setUserInfoState}
+                  />
+                }
               />
-            }
-          />
-          <Route
-            path="orders"
-            element={
-              <BuyerProductsPage
-                numberOfCartItems={numberOfCartItems}
-                showAuthCompState={showAuthCompState}
-                setShowAuthCompState={setShowAuthCompState}
-                userInfoState={userInfoState}
-                setUserInfoState={setUserInfoState}
+              <Route
+                path="orders"
+                element={
+                  <BuyerProductsPage
+                    numberOfCartItems={numberOfCartItems}
+                    showAuthCompState={showAuthCompState}
+                    setShowAuthCompState={setShowAuthCompState}
+                    userInfoState={userInfoState}
+                    setUserInfoState={setUserInfoState}
+                  />
+                }
               />
-            }
-          />
-          <Route
-            path="profile"
-            element={
-              <BuyerProfilePage
-                numberOfCartItems={numberOfCartItems}
-                showAuthCompState={showAuthCompState}
-                setShowAuthCompState={setShowAuthCompState}
-                userInfoState={userInfoState}
-                setUserInfoState={setUserInfoState}
+              <Route
+                path="profile"
+                element={
+                  <BuyerProfilePage
+                    numberOfCartItems={numberOfCartItems}
+                    showAuthCompState={showAuthCompState}
+                    setShowAuthCompState={setShowAuthCompState}
+                    userInfoState={userInfoState}
+                    setUserInfoState={setUserInfoState}
+                  />
+                }
               />
-            }
-          />
-          <Route
-            path="cart"
-            element={
-              <CartPage
-                numberOfCartItems={numberOfCartItems}
-                setNumberOfCartItems={setNumberOfCartItems}
-                showAuthCompState={showAuthCompState}
-                setShowAuthCompState={setShowAuthCompState}
-                userInfoState={userInfoState}
-                setUserInfoState={setUserInfoState}
+              <Route
+                path="cart"
+                element={
+                  <CartPage
+                    numberOfCartItems={numberOfCartItems}
+                    setNumberOfCartItems={setNumberOfCartItems}
+                    showAuthCompState={showAuthCompState}
+                    setShowAuthCompState={setShowAuthCompState}
+                    userInfoState={userInfoState}
+                    setUserInfoState={setUserInfoState}
+                  />
+                }
               />
-            }
-          />
-        </Route>
-        <Route path="/seller">
-          <Route
-            path=""
-            element={
-              <SellerHomePage
-                showAuthCompState={showAuthCompState}
-                setShowAuthCompState={setShowAuthCompState}
-                userInfoState={userInfoState}
-                setUserInfoState={setUserInfoState}
+            </Route>
+
+            <Route path="/seller">
+              <Route
+                path=""
+                element={
+                  <SellerHomePage
+                    showAuthCompState={showAuthCompState}
+                    setShowAuthCompState={setShowAuthCompState}
+                    userInfoState={userInfoState}
+                    setUserInfoState={setUserInfoState}
+                  />
+                }
               />
-            }
-          />
-          <Route
-            path="orders"
-            element={
-              <SellerProductsPage
-                showAuthCompState={showAuthCompState}
-                setShowAuthCompState={setShowAuthCompState}
-                userInfoState={userInfoState}
-                setUserInfoState={setUserInfoState}
+              <Route
+                path="orders"
+                element={
+                  <SellerProductsPage
+                    showAuthCompState={showAuthCompState}
+                    setShowAuthCompState={setShowAuthCompState}
+                    userInfoState={userInfoState}
+                    setUserInfoState={setUserInfoState}
+                  />
+                }
               />
-            }
-          />
-          <Route
-            path="profile"
-            element={
-              <SellerProfilePage
-                showAuthCompState={showAuthCompState}
-                setShowAuthCompState={setShowAuthCompState}
-                userInfoState={userInfoState}
-                setUserInfoState={setUserInfoState}
+              <Route
+                path="profile"
+                element={
+                  <SellerProfilePage
+                    showAuthCompState={showAuthCompState}
+                    setShowAuthCompState={setShowAuthCompState}
+                    userInfoState={userInfoState}
+                    setUserInfoState={setUserInfoState}
+                  />
+                }
               />
-            }
-          />
-        </Route>
-        <Route path="*" element={<ErrorPage />} />
-      </Routes>
+            </Route>
+            <Route path="*" element={<ErrorPage />} />
+          </Routes>
+        </SetPageNoContext.Provider>
+      </PageNoContext.Provider>
     </>
   );
 }
