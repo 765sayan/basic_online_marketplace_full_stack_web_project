@@ -1,10 +1,10 @@
 import imageIcon from "../assets/imageIcon.svg";
 import "../assets/productscomponents.css";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   buyProduct,
   getAllProductsAsUserService,
+  getCollectionOfProductsService,
 } from "../services/userProductsServices";
 import { addToCartService } from "../services/cartServices";
 
@@ -12,7 +12,9 @@ export default function ProductsComp(props) {
   const [productClickedState, setProductClickedStated] = useState([]);
   const [listOfCompState, setListOfCompState] = useState([]);
   const [token, setToken] = useState("");
-
+  const [totalListOfCompLength, setTotalListOfCompLength] = useState(0);
+  const [totalLengthList, setTotalLengthList] = useState([]);
+  const [pageNo, setPageNo] = useState(0);
   const {
     productNameFilter,
     sellerNameFilter,
@@ -20,20 +22,52 @@ export default function ProductsComp(props) {
     setNumberOfCartItems,
     setShowAuthCompState,
   } = props;
-  const navigate = useNavigate();
 
   function getAllProductsAsUser() {
-    const listOfComp = [];
+    let totalLengthArray = [];
 
     getAllProductsAsUserService().then((res) => {
       if (res.products) {
         let productsList = res.products;
-        productsList.map((element) => {
-          listOfComp.push(element);
-        });
-        setListOfCompState(listOfComp);
+        let totalLength = Math.floor(productsList / 8);
+        setTotalListOfCompLength(totalLength);
+        for (let i = 0; i < totalLength; i++) {
+          totalLengthArray.push(i);
+        }
+        setTotalLengthList(totalLengthArray);
       }
     });
+  }
+
+  function fetchData(offset) {
+    const listOfComp = [];
+    let limit = 8;
+
+    setPageNo(offset);
+
+    if (offset !== 0) {
+      getCollectionOfProductsService(limit, offset * 8).then((res) => {
+        if (res && res.products) {
+          let productsList = res.products;
+          productsList.map((element) => {
+            listOfComp.push(element);
+          });
+
+          setListOfCompState(listOfComp);
+        }
+      });
+    } else if (offset === 0) {
+      getCollectionOfProductsService(limit, 0).then((res) => {
+        if (res && res.products) {
+          let productsList = res.products;
+          productsList.map((element) => {
+            listOfComp.push(element);
+          });
+
+          setListOfCompState(listOfComp);
+        }
+      });
+    }
   }
 
   async function addToCartFunction(productId, sellerId) {
@@ -93,8 +127,13 @@ export default function ProductsComp(props) {
     ) {
       setToken(`Bearer ${JSON.parse(localStorage.getItem("auth")).token}`);
       getAllProductsAsUser();
+
+      fetchData(0);
+    } else {
+      getAllProductsAsUser();
+
+      fetchData(0);
     }
-    getAllProductsAsUser();
   }, []);
 
   return (
@@ -261,6 +300,162 @@ export default function ProductsComp(props) {
                 )}
               </div>
             );
+          }
+        })}
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+        }}
+      >
+        {totalLengthList.map((element, index) => {
+          if (
+            element === 0 ||
+            element === 1 ||
+            element === pageNo + 1 ||
+            element === pageNo ||
+            element === pageNo - 1 ||
+            element === totalListOfCompLength - 1 ||
+            element === totalLengthList
+          ) {
+            if (element === pageNo + 1 || element === pageNo - 1) {
+              if (element === pageNo - 1 && pageNo - 1 !== 0) {
+                return (
+                  <div key={index}>
+                    {pageNo === element ? (
+                      <div
+                        style={{
+                          fontSize: "20px",
+                          paddingLeft: "10px",
+                          paddingRight: "10px",
+                          cursor: "pointer",
+                          color: "blue",
+                        }}
+                        onClick={() => fetchData(element)}
+                      >
+                        {" . . . "}
+                        {element}
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          fontSize: "20px",
+                          paddingLeft: "10px",
+                          paddingRight: "10px",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => fetchData(element)}
+                      >
+                        {" . . . "}
+                        {element}
+                      </div>
+                    )}
+                  </div>
+                );
+              } else if (
+                element === pageNo + 1 &&
+                pageNo + 1 !== totalListOfCompLength - 1
+              ) {
+                return (
+                  <div key={index}>
+                    {pageNo === element ? (
+                      <div
+                        style={{
+                          fontSize: "20px",
+                          paddingLeft: "10px",
+                          paddingRight: "10px",
+                          cursor: "pointer",
+                          color: "blue",
+                        }}
+                        onClick={() => fetchData(element)}
+                      >
+                        {element}
+                        {" . . . "}
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          fontSize: "20px",
+                          paddingLeft: "10px",
+                          paddingRight: "10px",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => fetchData(element)}
+                      >
+                        {element}
+                        {" . . . "}
+                      </div>
+                    )}
+                  </div>
+                );
+              } else {
+                return (
+                  <div key={index}>
+                    {pageNo === element ? (
+                      <div
+                        style={{
+                          fontSize: "20px",
+                          paddingLeft: "10px",
+                          paddingRight: "10px",
+                          cursor: "pointer",
+                          color: "blue",
+                        }}
+                        onClick={() => fetchData(element)}
+                      >
+                        {element}
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          fontSize: "20px",
+                          paddingLeft: "10px",
+                          paddingRight: "10px",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => fetchData(element)}
+                      >
+                        {element}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+            } else {
+              return (
+                <div key={index}>
+                  {pageNo === element ? (
+                    <div
+                      style={{
+                        fontSize: "20px",
+                        paddingLeft: "10px",
+                        paddingRight: "10px",
+                        cursor: "pointer",
+                        color: "blue",
+                      }}
+                      onClick={() => fetchData(element)}
+                    >
+                      {element}
+                    </div>
+                  ) : (
+                    <div
+                      style={{
+                        fontSize: "20px",
+                        paddingLeft: "10px",
+                        paddingRight: "10px",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => fetchData(element)}
+                    >
+                      {element}
+                    </div>
+                  )}
+                </div>
+              );
+            }
+          } else {
+            return <div key={index}>{""}</div>;
           }
         })}
       </div>

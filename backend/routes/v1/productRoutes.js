@@ -21,6 +21,7 @@ const {
   getAllProducts,
   cancelProduct,
   getImage,
+  getSetOfProducts,
 } = require("../../controllers/userProductControllers");
 
 router.get("", auth, adminUserType, allProducts);
@@ -32,8 +33,8 @@ router.get("/ordered", auth, adminUserType, getOrderedProducts);
 
 router.post("/buy", auth, userUserType, buyProduct);
 router.get("/buy", auth, userUserType, seeOrderedProducts);
-// router.get("/list", auth, userUserType, getAllProducts);
-router.get("/list", getAllProducts);
+
+router.get("/list", getSetOfProducts);
 router.delete("/buy/:id", auth, userUserType, cancelProduct);
 router.get("/file", getImage);
 

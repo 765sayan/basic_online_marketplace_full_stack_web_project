@@ -6,18 +6,6 @@ const fs = require("fs");
 
 const path = require("path");
 
-const getAllProducts = asyncHandler(async (req, res, next) => {
-  try {
-    const products = await Product.find().populate("seller", ["name"]);
-
-    res.json({
-      products: products,
-    });
-  } catch (error) {
-    res.status(500).json({ msg: "couldn't get products" });
-  }
-});
-
 const buyProduct = asyncHandler(async (req, res, next) => {
   if (req.user && req.body) {
     const productId = req.body.productid;
@@ -99,10 +87,43 @@ const getImage = asyncHandler(async (req, res) => {
   }
 });
 
+const getSetOfProducts = asyncHandler(async (req, res) => {
+  if (req.query?.limit && req.query?.offset) {
+    let limit = req.query?.limit;
+    let offset = req.query?.offset;
+
+    try {
+      const products = await Product.find()
+        .skip(offset)
+        .limit(limit)
+        .populate("seller", ["name"]);
+
+      res.json({
+        products: products,
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(404).json({ msg: "Error getting products" });
+    }
+  } else {
+    try {
+      const products = await Product.find();
+
+      res.json({
+        products: products.length,
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(404).json({ msg: "Error getting products" });
+    }
+  }
+});
+
 module.exports = {
   getAllProducts,
   buyProduct,
   seeOrderedProducts,
   cancelProduct,
   getImage,
+  getSetOfProducts,
 };

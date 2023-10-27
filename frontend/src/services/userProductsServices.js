@@ -3,6 +3,7 @@ import {
   GET_ALL_ORDERED_PRODUCTS_URL,
   GET_ALL_PRODUCTS_URL,
   cancelProductUrl,
+  getCollectionOfProducts,
 } from "../apiUrls/userProductUrls";
 
 export const getAllProductsAsUserService = async () => {
@@ -24,6 +25,21 @@ export const getAllOrderedProductsAsUser = async (token) => {
     };
 
     let res = await fetch(GET_ALL_ORDERED_PRODUCTS_URL, options);
+    res = await res.json();
+
+    if (res) {
+      return res;
+    }
+  }
+};
+
+export const getCollectionOfProductsService = async (limit, offset) => {
+  if (limit && offset >= 0) {
+    const options = {
+      method: "GET",
+    };
+
+    let res = await fetch(getCollectionOfProducts(limit, offset), options);
     res = await res.json();
 
     if (res) {
