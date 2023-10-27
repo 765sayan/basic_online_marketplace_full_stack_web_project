@@ -18,7 +18,6 @@ const {
 const {
   buyProduct,
   seeOrderedProducts,
-  getAllProducts,
   cancelProduct,
   getImage,
   getSetOfProducts,
