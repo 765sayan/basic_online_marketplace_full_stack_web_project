@@ -120,7 +120,6 @@ const getSetOfProducts = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
-  getAllProducts,
   buyProduct,
   seeOrderedProducts,
   cancelProduct,
