@@ -8,6 +8,7 @@ import {
 } from "../services/userProductsServices";
 import { addToCartService } from "../services/cartServices";
 import { PageNoContext, SetPageNoContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
 export default function ProductsComp(props) {
   const [productClickedState, setProductClickedStated] = useState([]);
@@ -23,6 +24,8 @@ export default function ProductsComp(props) {
     setNumberOfCartItems,
     setShowAuthCompState,
   } = props;
+
+  const navigate = useNavigate();
 
   function getAllProductsAsUser() {
     let totalLengthArray = [];
@@ -124,6 +127,19 @@ export default function ProductsComp(props) {
     }
   }
 
+  function goToDetailsPage(id, productName, sellerName, sellerId) {
+    if (id && productName && sellerName && sellerId) {
+      navigate("/details", {
+        state: {
+          id: id,
+          productName: productName,
+          sellerName: sellerName,
+          sellerId: sellerId,
+        },
+      });
+    }
+  }
+
   useEffect(() => {
     if (
       localStorage.getItem("auth") &&
@@ -205,6 +221,31 @@ export default function ProductsComp(props) {
                           boxShadow: "none",
                         }}
                         onClick={() => {
+                          goToDetailsPage(
+                            element._id,
+                            element.name,
+                            element.seller.name,
+                            element.seller._id
+                          );
+                        }}
+                      >
+                        See Details
+                      </button>
+
+                      <button
+                        style={{
+                          border: "solid",
+                          borderColor: "darkblue",
+                          borderWidth: "1px",
+                          padding: "4px",
+                          borderRadius: "4px",
+                          color: "darkblue",
+                          fontSize: "20px",
+                          margin: "8px",
+                          cursor: "pointer",
+                          boxShadow: "none",
+                        }}
+                        onClick={() => {
                           buyProductFunction(element._id, element.name);
                         }}
                       >
@@ -268,6 +309,32 @@ export default function ProductsComp(props) {
                     <h4>{element.name}</h4>
                     <img src={imageIcon} width={200} height={200} />
                     <i>{element.seller.name}</i>
+
+                    <button
+                      style={{
+                        border: "solid",
+                        borderColor: "darkblue",
+                        borderWidth: "1px",
+                        padding: "4px",
+                        borderRadius: "4px",
+                        color: "darkblue",
+                        fontSize: "20px",
+                        margin: "8px",
+                        cursor: "pointer",
+                        boxShadow: "none",
+                      }}
+                      onClick={() => {
+                        goToDetailsPage(
+                          element._id,
+                          element.name,
+                          element.seller.name,
+                          element.seller._id
+                        );
+                      }}
+                    >
+                      See Details
+                    </button>
+
                     <button
                       style={{
                         border: "solid",

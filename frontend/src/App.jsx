@@ -12,6 +12,7 @@ import CartPage from "./pages/CartPage";
 import { useEffect, useState } from "react";
 import { getCartService } from "./services/cartServices";
 import { createContext } from "react";
+import BuyerProductDetailsPage from "./pages/BuyerProductDetailsPage";
 
 export const PageNoContext = createContext(undefined);
 export const SetPageNoContext = createContext(undefined);
@@ -64,6 +65,20 @@ function App() {
                   />
                 }
               />
+              <Route
+                path="/details"
+                element={
+                  <BuyerProductDetailsPage
+                    numberOfCartItems={numberOfCartItems}
+                    setNumberOfCartItems={setNumberOfCartItems}
+                    showAuthCompState={showAuthCompState}
+                    setShowAuthCompState={setShowAuthCompState}
+                    userInfoState={userInfoState}
+                    setUserInfoState={setUserInfoState}
+                    productInfo={"None"}
+                  />
+                }
+              />
             </Route>
             <Route path="/buyer">
               <Route
@@ -76,6 +91,20 @@ function App() {
                     setShowAuthCompState={setShowAuthCompState}
                     userInfoState={userInfoState}
                     setUserInfoState={setUserInfoState}
+                  />
+                }
+              />
+              <Route
+                path="details"
+                element={
+                  <BuyerProductDetailsPage
+                    numberOfCartItems={numberOfCartItems}
+                    setNumberOfCartItems={setNumberOfCartItems}
+                    showAuthCompState={showAuthCompState}
+                    setShowAuthCompState={setShowAuthCompState}
+                    userInfoState={userInfoState}
+                    setUserInfoState={setUserInfoState}
+                    productInfo={"None"}
                   />
                 }
               />
