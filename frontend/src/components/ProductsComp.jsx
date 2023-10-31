@@ -534,7 +534,7 @@ export default function ProductsComp(props) {
             paddingRight: "10px",
             cursor: "pointer",
           }}
-          onClick={() => fetchData(totalLengthList.length - 1)}
+          onClick={() => fetchData(totalLengthList.length)}
         >
           More ...
         </div>
