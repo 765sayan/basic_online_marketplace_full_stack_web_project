@@ -33,7 +33,7 @@ export default function LoginComp(props) {
           }
         }
       } else {
-        alert(res.msg);
+        // alert(res.msg);
       }
     }
   }
