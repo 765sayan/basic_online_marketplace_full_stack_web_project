@@ -29,8 +29,6 @@ export default function SellerProfilePage(props) {
     if (res) {
       if (!res.msg) {
         setUserProfileInfoState(res);
-      } else {
-        alert(res.msg);
       }
     }
   }
@@ -49,8 +47,6 @@ export default function SellerProfilePage(props) {
         if (!res.msg) {
           localStorage.removeItem("auth");
           navigate("/");
-        } else {
-          alert(res.msg);
         }
       }
     }
@@ -64,8 +60,6 @@ export default function SellerProfilePage(props) {
         if (!res.msg) {
           localStorage.removeItem("auth");
           navigate("/");
-        } else {
-          alert(res.msg);
         }
       }
     }

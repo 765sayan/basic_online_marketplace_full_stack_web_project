@@ -18,17 +18,6 @@ export default function RegisterComp(props) {
       const newRegisterInfo = { username, password, name, usertype };
 
       let res = await registerService(newRegisterInfo);
-      if (!res.msg) {
-        if (res.usertype === "user") {
-          // setShowAuthCompState(false);
-          alert("Buyer Registered");
-        } else if (res.usertype === "admin") {
-          // setShowAuthCompState(false);
-          alert("Seller Registered");
-        }
-      } else {
-        alert("Please Enter Registration Values");
-      }
     }
   }
 

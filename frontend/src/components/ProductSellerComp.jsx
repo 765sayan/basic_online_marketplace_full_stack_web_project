@@ -50,10 +50,7 @@ export default function ProductSellerComp() {
 
         if (res) {
           if (!res.msg) {
-            alert(`Product ${res.productname} added`);
             window.location.reload();
-          } else {
-            alert(`${res.msg}`);
           }
         }
       }
@@ -97,8 +94,6 @@ export default function ProductSellerComp() {
             }
           });
           setListOfCompState(newListOfCompState);
-        } else if (res.msg) {
-          alert(`${res.msg}`);
         }
       }
     }

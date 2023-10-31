@@ -92,8 +92,6 @@ export default function ProductsComp(props) {
             numberOfCartItemsTemp = numberOfCartItemsTemp + 1;
             setNumberOfCartItems(numberOfCartItemsTemp);
           }
-        } else {
-          alert(res.msg);
         }
       }
     } else {
@@ -117,13 +115,6 @@ export default function ProductsComp(props) {
         productid: productId,
       };
       let res = await buyProduct(productInfo, token);
-      if (res) {
-        if (!res.msg) {
-          alert(`Product ${productName} Ordered`);
-        } else {
-          alert(`${res.msg}`);
-        }
-      }
     }
   }
 

@@ -32,8 +32,6 @@ export default function LoginComp(props) {
             navigate("/seller");
           }
         }
-      } else {
-        // alert(res.msg);
       }
     }
   }

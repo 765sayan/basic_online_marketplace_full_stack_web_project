@@ -37,13 +37,6 @@ export default function CartProductsComp(props) {
         productid: productId,
       };
       let res = await buyProduct(productInfo, token);
-      if (res) {
-        if (!res.msg) {
-          // alert(`Product ${productName} Ordered`);
-        } else {
-          // alert(`${res.msg}`);
-        }
-      }
     }
   }
 

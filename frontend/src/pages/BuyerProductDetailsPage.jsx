@@ -48,8 +48,6 @@ export default function BuyerProductDetailsPage(props) {
             numberOfCartItemsTemp = numberOfCartItemsTemp + 1;
             setNumberOfCartItems(numberOfCartItemsTemp);
           }
-        } else {
-          alert(res.msg);
         }
       }
     } else {
@@ -79,13 +77,6 @@ export default function BuyerProductDetailsPage(props) {
         productInfo,
         `Bearer ${JSON.parse(localStorage.getItem("auth")).token}`
       );
-      if (res) {
-        if (!res.msg) {
-          alert(`Product ${productName} Ordered`);
-        } else {
-          alert(`${res.msg}`);
-        }
-      }
     }
   }
 
