@@ -140,7 +140,7 @@ export default function SellerProfilePage(props) {
             </div>
             <div className="auth-comp-input-sections">
               <label className="auth-comp-labels">
-                You are an{" "}
+                You are a{" "}
                 {userProfileInfoState.usertype === "admin" ? "Seller" : "Buyer"}
                 , to change user type:{" "}
               </label>
