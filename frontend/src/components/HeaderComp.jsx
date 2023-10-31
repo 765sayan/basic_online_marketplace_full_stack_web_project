@@ -35,7 +35,7 @@ export default function HeaderComp(props) {
       if (!res.msg) {
         setUserInfoState(res);
       } else {
-        alert(res.msg);
+        // alert(res.msg);
       }
     }
   }
