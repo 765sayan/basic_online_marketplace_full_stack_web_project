@@ -60,6 +60,8 @@ export default function SellerProfilePage(props) {
         if (!res.msg) {
           localStorage.removeItem("auth");
           navigate("/");
+        } else {
+          alert("Can not delete your account due to existing orders by buyers");
         }
       }
     }
