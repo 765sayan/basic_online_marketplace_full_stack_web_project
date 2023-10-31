@@ -536,7 +536,7 @@ export default function ProductsComp(props) {
           }}
           onClick={() => fetchData(totalLengthList.length - 1)}
         >
-          "More ... "
+          More ...
         </div>
       </div>
     </>
