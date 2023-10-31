@@ -526,6 +526,18 @@ export default function ProductsComp(props) {
             return <div key={index}>{""}</div>;
           }
         })}
+
+        <div
+          style={{
+            fontSize: "20px",
+            paddingLeft: "10px",
+            paddingRight: "10px",
+            cursor: "pointer",
+          }}
+          onClick={() => fetchData(totalLengthList.length - 1)}
+        >
+          "More ... "
+        </div>
       </div>
     </>
   );
